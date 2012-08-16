@@ -4,12 +4,13 @@ from django import forms
 from django.db.models import Field, SubfieldBase
 from django.utils.encoding import smart_unicode
 
+# psycopg2 needs us to register the uuid type
 try:
-    # psycopg2 needs us to register the uuid type
     import psycopg2.extras
-    psycopg2.extras.register_uuid()
-except (ImportError, AttributeError):
+except ImportError:
     pass
+else:
+    psycopg2.extras.register_uuid()
 
 
 class StringUUID(uuid.UUID):
